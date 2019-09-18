@@ -13,13 +13,21 @@
 
 ### MPI_Send : 
     envia uma mensagem. Ele envia mensagem mesmo q o recepetor não esteja executando Recv(Caso tamanho seja menor que o limite). O MPI implementa um buffer que armazena a mensagem. MPI é envio de dados BLOQUEANTE. Caso seja > limite, o emissor aguarda o receptor sincronizar pra receber o dado.
+
     ```
     MPI_SEND(void *buf, int count, MPI_Datatype, int dest, int tag, MPI_COMM comm);
     ```
-    parâmetros : endereço inicial dos dados enviados, número de elementos a serem enviados, tipo do dados, processo destino, rótulo da mensagem, comunicador MPI
+
+    parâmetros : endereço inicial dos dados enviados, número de elementos a serem enviados, tipo do dado, processo destino, rótulo da mensagem, comunicador MPI
 
 ### MPI_Recv : 
-    recebe uma mensagem
+    recebe uma mensagem.
+
+    ```
+
+    ```
+
+    parâmetros : endereço inicial dos dados recebidos, número de elementos a serem recebidos, tipo do dado, processo fonte esperado, rótulo da mensagem esperado, comunicador MPI, processo fonte e rótulos efetivos(controle que diz, origem, tamanho e rótulos).
 
 ### MRP_Finilize : 
     sai do ambiente MPI
