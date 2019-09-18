@@ -41,5 +41,6 @@
     ```
     $mpicc code.c -o out
     $mpirun -n 5 ./out
+    $mpiexec -n 4 out
     ```
     -n : número de processos.
