@@ -29,47 +29,41 @@ int main(int argc, char const *argv[]){
     int fim = inicio + fatia -1;     
 	int k;
 
+    int *vec = (int *)malloc(limite * sizeof(int));
+    int *sub_vec = (int *)malloc(fatia *sizeof(int));
 
-    int * vec = NULL;
-    if(rank == 0){
-        vec = malloc(fatia * num_proc * sizeof(int)); // vetor original
+    for (i = 0; i < limite; i++){
+        vec[i] = i;
     }
-    int * sub_vec = malloc(fatia * sizeof(int));
-    assert(sub_vec != NULL);
     
     MPI_Scatter(vec, fatia, MPI_INT, sub_vec, fatia, MPI_INT, 0, MPI_COMM_WORLD);
-    //printf("processo[%d] -> ini = %d, fim %d\n", rank, inicio, fim);
 
     // caluclo dos primos entre 1 e limite
-
-    int * sub_primo = (int *)malloc(fatia * sizeof(int));
-    for(i = inicio; i < fim; ++i){ 
-    	for(j = 2; j < limite; ++j){ //testa os divisores desse numero
-    		if((i % j == 0) && (i != j)){ //se ele divide por algum numero diferente dele e de 1
-    			flag = 1;
-    		}
+    for(i = 0; i < fatia; ++i){ 
+    	for(j = 0; j <= sub_vec[i]; ++j){ //testa os divisores desse numero
+            if(j != 0){    
+                if(sub_vec[i] % j == 0){ //se ele divide por algum numero diferente dele e de 1
+                    flag+= 1;
+                }
+            }
     	}
-    	if (flag == 0){ // se ele só é divisível por ele e por 1
-    		sub_primo[i] = i;
+    	if (flag <= 2){ // se ele só é divisível por ele e por 1
+    		//
     	}
     	else{ // se nao eh primo
-    		sub_primo[i] = -1;
+    		sub_vec[i] = -1;
     	}
     	flag = 0;
     }
 
-    int *primos = NULL;
-    if(rank == 0){
-        primos = (int *)malloc(limite * sizeof(int));
-        assert(primos != NULL);
-        primos [0] = -1;
-    }
+    MPI_Gather(sub_vec, fatia, MPI_INT, vec, fatia, MPI_INT, 0, MPI_COMM_WORLD);
+
     printf("Sou o processo %d\n", rank);
-    MPI_Gather(sub_primo, fatia, MPI_INT, primos, fatia, MPI_INT, 0, MPI_COMM_WORLD);
+    
     
     if(rank == 0){
 	    for (k = 0; k < limite; ++k){
-	    	printf("%d\n", primos[k]);
+	    	printf("%d\n", vec[k]);
 	    }
 	}
 
