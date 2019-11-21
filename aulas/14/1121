@@ -1,0 +1,28 @@
+# Coordenação e Acordo - 11/21
+Processos coordenando suas ações ou concordância.
+
+## Servidor gerente
+O trabalho  coordenado por um 'chefe'. Os outros dispositivos de acordo com ele
+
+## Processos trabalhando com token de exclusão mútua
+Quem tem o token, usa o recurso. Só um usa o recurso.
+  Problema: o dispositivo que está com o token pode 'morrer'.
+  
+## Multicast 
+A ideia  que os processos que solicitam a entrada em uma seção crítica difundem seletivamente (multicast) uma mensagem
+de requisição e só podem entrar nela quando todos os outros processos tiverem respondido a essa mensagem.
+
+### Relogios de Lamport
+1- Um processo incrementa seu contador antes de cada evento daquele processo;
+2- Quando um processo envia uma mensagem, esse inclui o valor de seu contador junto da mensagem;
+3- No recebimento de uma mensagem, o processo atualiza seu contador para o valor maior entre o próprio valor
+e o valor do contador recebido na mensagem;
+
+Cada processo registra seu estado de estar fora da seção crítica (RELEASED),
+querendo entrar (WANTED) ou estar na seção crítica (HELD), em uma variável state.
+
+Esse algoritmo tem a propriedade de segurança EM1. Se fosse possível dois processos, pi
+ e pj  (i ≠ j), entrarem na seção crítica ao mesmo tempo, eles teriam que ter respondido um ao outro. No entanto, como os pares 
+ <Ti, pi>
+> são totalmente ordenados,
+isso é impossível.
