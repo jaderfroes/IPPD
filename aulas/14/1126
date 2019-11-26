@@ -1,0 +1,18 @@
+# Algoritmos
+
+## Exclusão mútua
+Maekawa
+
+## Eleição
+Escolher qual dispositivo vai realizar a tarefa
+### Baseada em anel
+  Cada processo recebe uma requisição de eleição(contendo o identificador) e ele passa o identificador caso o id recebido seja maior do que o próprio id.
+  Um processo eleito se ele envia o seu id e ao final ele recebe o id de volta.
+
+  Problema: não assume falha. Quando o último do anel eo eleito, pois foi enviado n-1 mensagens com prioridade menor e tem q avisar do resultado para todos novamente.
+  ### Baseado em Valentão
+   ???
+   Problema: uso de multicasta, número de mensagens aumenta para poder tolerar falha.
+   
+###
+    
